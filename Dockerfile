@@ -1,14 +1,7 @@
 FROM ubuntu
-ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update && apt install -y \
     ssh wget curl
-RUN wget -q https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip -O /ngrok-stable-linux-amd64.zip\
-    && cd / && unzip ngrok-stable-linux-amd64.zip \
-    && chmod +x ngrok
 RUN mkdir /run/sshd \
-    && echo "/ngrok tcp --authtoken 28ZXAvx0WT1VJq7uxWzTQfdkl63_3jnq34CkMiMtECTipvBsZ --region ap 22 &" >>/openssh.sh \
-    && echo "sleep 5" >> /openssh.sh \
-    && echo "curl -s http://localhost:4040/api/tunnels | python3 -c \"import sys, json; print(\\\"ssh连接命令:\\\n\\\",\\\"ssh\\\",\\\"root@\\\"+json.load(sys.stdin)['tunnels'][0]['public_url'][6:].replace(':', ' -p '),\\\"\\\nROOT默认密码:akashi520\\\")\" || echo \"\nError：请检查NGROK_TOKEN变量是否存在，或Ngrok节点已被占用\n\"" >> /openssh.sh \
     && echo '/usr/sbin/sshd -D' >>/openssh.sh \
     && echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config  \
     && echo root:123123|chpasswd \
