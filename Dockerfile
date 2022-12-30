@@ -1,3 +1,5 @@
 FROM python:3.8-slim
 WORKDIR /usr/src/app
-EXPOSE 443
+RUN apt install nginx -y
+RUN nginx
+EXPOSE 443 80
