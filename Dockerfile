@@ -1,3 +1,3 @@
-FROM ubuntu
-RUN mkdir test
-EXPOSE 80 443 22
+FROM python:3.8-slim
+WORKDIR /usr/src/app
+EXPOSE 443
